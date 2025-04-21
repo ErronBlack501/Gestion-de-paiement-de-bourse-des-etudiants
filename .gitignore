@@ -1,6 +1,81 @@
+# ========================
+# OS and Editor Files
+# ========================
 .DS_Store
-/node_modules/
+Thumbs.db
+*.swp
+*.swo
+*.sublime*
+*.vscode/
+.idea/
+*.iml
 
-# React Router
+# ========================
+# Dependency directories
+# ========================
+node_modules/
+
+# ========================
+# Build and Production
+# ========================
+build/
+dist/
+out/
+coverage/
+.next/
+.cache/
+.eslintcache
+
+# ========================
+# Logs
+# ========================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ========================
+# Environment files
+# ========================
+.env
+.env.*
+
+# ========================
+# Test and Coverage
+# ========================
+coverage/
+.nyc_output/
+
+# ========================
+# Miscellaneous
+# ========================
+*.local
+*.tgz
+
+# ========================
+# React/Remix/Router
+# ========================
 /.react-router/
-/build/
+
+# ========================
+# OS Trash
+# ========================
+*.Trash-*
+
+# ========================
+# Lock files
+# ========================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ========================
+# Others
+# ========================
+*.bak
+*.tmp
+*.temp
+
+# Uncomment if you use storybook
+# .storybook-static/
