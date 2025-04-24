@@ -10,5 +10,6 @@ type Params = {
   "/": {};
   "/login": {};
   "/register": {};
-  "/dashboard": {};
+  "/admin": {};
+  "/admin/profile": {};
 };
