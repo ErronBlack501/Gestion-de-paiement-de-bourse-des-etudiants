@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  ClockAlert,
   Coins,
   CreditCard,
   HelpCircleIcon,
@@ -48,6 +49,11 @@ const data = {
       title: "Paiements",
       url: "#",
       icon: CreditCard,
+    },
+    {
+      title: "Retartadaires",
+      url: "#",
+      icon: ClockAlert,
     },
   ],
   navSecondary: [
