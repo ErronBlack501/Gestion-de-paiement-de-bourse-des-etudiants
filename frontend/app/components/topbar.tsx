@@ -1,0 +1,106 @@
+import { useState } from "react";
+import { Input } from "~/components/ui/input";
+import { Bell, Languages, Settings, Menu } from "lucide-react";
+import { SidebarTrigger } from "~/components/ui/sidebar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "~/components/ui/dropdown-menu";
+import { Button } from "~/components/ui/button";
+
+export function Topbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <div className="border-border relative flex h-16 flex-wrap items-center gap-2 border-b px-4 shadow-sm">
+      {/* Sidebar Toggle */}
+      <SidebarTrigger />
+
+      {/* Search input */}
+      <div className="flex min-w-[120px] flex-1 items-end gap-2">
+        <div className="relative">
+          <Input
+            type="text"
+            placeholder="Search…"
+            className="border-border w-auto rounded-lg border py-1.5 pr-10 pl-3 shadow-sm focus:ring-2 focus:outline-none"
+          />
+          <span className="absolute top-1/2 right-2 -translate-y-1/2 text-xs">⌘K</span>
+        </div>
+      </div>
+
+      {/* Desktop Controls */}
+      <div className="ml-4 hidden items-center gap-4 sm:flex">
+        <button className="hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded px-2 py-1 transition-colors">
+          <Languages className="h-5 w-5" />
+          <span className="text-sm">EN</span>
+        </button>
+        <button
+          className="hover:bg-accent hover:text-accent-foreground rounded p-2 transition-colors"
+          aria-label="Notifications"
+        >
+          <Bell className="h-5 w-5" />
+        </button>
+        <button
+          className="hover:bg-accent hover:text-accent-foreground rounded p-2 transition-colors"
+          aria-label="Settings"
+        >
+          <Settings className="h-5 w-5" />
+        </button>
+        <Avatar>
+          <AvatarImage src="/default-avatar.svg" alt="Profile" />
+          <AvatarFallback>U</AvatarFallback>
+        </Avatar>
+      </div>
+
+      {/* Mobile Menu Button */}
+      <button
+        className="hover:bg-accent ml-2 rounded p-2 transition-colors sm:hidden"
+        aria-label="Open menu"
+        onClick={() => setMobileMenuOpen((v) => !v)}
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="absolute top-16 right-4 z-50 sm:hidden">
+          <DropdownMenu open onOpenChange={setMobileMenuOpen}>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="sr-only">
+                Open Menu
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              side="bottom"
+              align="end"
+              className="w-56 bg-white shadow-lg border rounded-md"
+            >
+              <DropdownMenuItem className="flex items-center gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+                <Avatar className="h-6 w-6">
+                  <AvatarImage src="/default-avatar.svg" alt="Profile" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+                <span className="text-sm text-foreground">Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center pl-3.5 gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+                <Languages className="h-5 w-5" />
+                <span className="text-sm">EN</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center pl-3.5 gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+                <Bell className="h-5 w-5" />
+                <span className="text-sm">Notifications</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center pl-3.5 gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+                <Settings className="h-5 w-5" />
+                <span className="text-sm">Settings</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
+    </div>
+  );
+}

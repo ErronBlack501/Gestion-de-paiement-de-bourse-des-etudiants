@@ -1,6 +1,6 @@
 import { PageHeader } from "~/components/page-header";
 
-export default function AdminHomePage() {
+export default function HomePage() {
   return (
     <>
       <PageHeader

@@ -1,4 +1,9 @@
-import {
+import { type RouteConfig } from "@react-router/dev/routes";
+import { flatRoutes } from "@react-router/fs-routes";
+
+export default flatRoutes() satisfies RouteConfig;
+
+/* import {
   type RouteConfig,
   index,
   layout,
@@ -7,15 +12,16 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  index("routes/home.tsx"),
-  layout("routes/auth/layout.tsx", [
-    route("login", "routes/auth/login.tsx"),
-    route("register", "routes/auth/register.tsx"),
+  index("routes/welcome.tsx"),
+  layout("routes/auth/route.tsx", [
+    route("login", "routes/auth/route.tsx"),
+    route("register", "routes/auth/route.tsx"),
   ]),
   ...prefix("admin", [
-    layout("routes/admin/layout.tsx", [
-      index("routes/admin/dashboard.tsx"),
-      route("profile", "routes/admin/profile.tsx"),
+    layout("routes/admin/route.tsx", [
+      index("routes/admin/route.tsx"),
+      route("profile", "routes/admin/admin.profile.tsx"),
     ]),
   ]),
 ] satisfies RouteConfig;
+ */

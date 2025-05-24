@@ -19,11 +19,11 @@ export default function AuthLayout() {
           </div>
         </div>
       </div>
-      <div className="bg-muted relative hidden lg:block">
+      <div>
         <img
-          src="/placeholder.svg"
+          src="/welcome-bg.jpg"
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="h-full w-full object-contain p-8"
         />
       </div>
     </div>
