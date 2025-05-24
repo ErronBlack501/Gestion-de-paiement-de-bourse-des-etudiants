@@ -45,12 +45,6 @@ export function Topbar() {
         >
           <Bell className="h-5 w-5" />
         </button>
-        <button
-          className="hover:bg-accent hover:text-accent-foreground rounded p-2 transition-colors"
-          aria-label="Settings"
-        >
-          <Settings className="h-5 w-5" />
-        </button>
         <Avatar>
           <AvatarImage src="/default-avatar.svg" alt="Profile" />
           <AvatarFallback>U</AvatarFallback>
@@ -94,10 +88,6 @@ export function Topbar() {
               <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground flex items-center gap-2 pl-3.5">
                 <Bell className="h-5 w-5" />
                 <span className="text-sm">Notifications</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground flex items-center gap-2 pl-3.5">
-                <Settings className="h-5 w-5" />
-                <span className="text-sm">Settings</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
