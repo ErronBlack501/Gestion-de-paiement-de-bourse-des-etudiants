@@ -24,10 +24,12 @@ export function Topbar() {
         <div className="relative">
           <Input
             type="text"
-            placeholder="Search…"
+            placeholder="Rechercher…"
             className="border-border w-auto rounded-lg border py-1.5 pr-10 pl-3 shadow-sm focus:ring-2 focus:outline-none"
           />
-          <span className="absolute top-1/2 right-2 -translate-y-1/2 text-xs">⌘K</span>
+          <span className="absolute top-1/2 right-2 -translate-y-1/2 text-xs">
+            ⌘K
+          </span>
         </div>
       </div>
 
@@ -35,7 +37,7 @@ export function Topbar() {
       <div className="ml-4 hidden items-center gap-4 sm:flex">
         <button className="hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded px-2 py-1 transition-colors">
           <Languages className="h-5 w-5" />
-          <span className="text-sm">EN</span>
+          <span className="text-sm">FR</span>
         </button>
         <button
           className="hover:bg-accent hover:text-accent-foreground rounded p-2 transition-colors"
@@ -76,24 +78,24 @@ export function Topbar() {
             <DropdownMenuContent
               side="bottom"
               align="end"
-              className="w-56 bg-white shadow-lg border rounded-md"
+              className="w-56 rounded-md border bg-white shadow-lg"
             >
-              <DropdownMenuItem className="flex items-center gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+              <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground flex items-center gap-2">
                 <Avatar className="h-6 w-6">
                   <AvatarImage src="/default-avatar.svg" alt="Profile" />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
-                <span className="text-sm text-foreground">Profile</span>
+                <span className="text-foreground text-sm">Profile</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center pl-3.5 gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+              <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground flex items-center gap-2 pl-3.5">
                 <Languages className="h-5 w-5" />
                 <span className="text-sm">EN</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center pl-3.5 gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+              <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground flex items-center gap-2 pl-3.5">
                 <Bell className="h-5 w-5" />
                 <span className="text-sm">Notifications</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center pl-3.5 gap-2 text-foreground hover:bg-accent hover:text-accent-foreground">
+              <DropdownMenuItem className="text-foreground hover:bg-accent hover:text-accent-foreground flex items-center gap-2 pl-3.5">
                 <Settings className="h-5 w-5" />
                 <span className="text-sm">Settings</span>
               </DropdownMenuItem>

@@ -32,7 +32,7 @@ export default function WelcomePage() {
             </div>
           </div>
           <img
-            src="/boursitra-logo/svg/logo-color.svg"
+            src="/logo-color.svg"
             alt="Logo Boursitra"
             className="h-full w-full object-contain p-8"
           />

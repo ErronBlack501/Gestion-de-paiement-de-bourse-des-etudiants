@@ -9,8 +9,8 @@ interface PageHeaderProps {
 export function PageHeader({ title, subtitle, children }: PageHeaderProps) {
   return (
     <header className="mb-8">
-      <h1 className="mb-1 text-3xl font-bold text-[#328E6E]">{title}</h1>
-      {subtitle && <p className="mb-2 text-lg text-[#67AA6E]">{subtitle}</p>}
+      <h1 className="mb-1 text-3xl font-bold">{title}</h1>
+      {subtitle && <p className="mb-2 text-lg">{subtitle}</p>}
       {children}
     </header>
   );
