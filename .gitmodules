@@ -1,0 +1,4 @@
+[submodule "bourse"]
+	path = bourse
+	url = https://github.com/AnjaHarentsoa/bourse.git
+	branch = dev
