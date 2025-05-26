@@ -32,27 +32,27 @@ const data = {
   navMain: [
     {
       title: "Tableau de bord",
-      url: "#",
+      url: "/admin",
       icon: LayoutDashboardIcon,
     },
     {
       title: "Étudiants",
-      url: "#",
+      url: "/admin/students",
       icon: Users,
     },
     {
       title: "Montant",
-      url: "#",
+      url: "/admin/amounts",
       icon: Coins,
     },
     {
       title: "Paiements",
-      url: "#",
+      url: "/admin/payments",
       icon: CreditCard,
     },
     {
       title: "Retartadaires",
-      url: "#",
+      url: "/admin/delayed",
       icon: ClockAlert,
     },
   ],

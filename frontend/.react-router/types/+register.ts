@@ -4,6 +4,10 @@ declare module "react-router" {
   interface Register {
     params: Params;
   }
+
+  interface Future {
+    unstable_middleware: false
+  }
 }
 
 type Params = {
@@ -11,4 +15,5 @@ type Params = {
   "/register": {};
   "/login": {};
   "/admin": {};
+  "/admin/students": {};
 };

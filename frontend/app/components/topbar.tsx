@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input } from "~/components/ui/input";
-import { Bell, Languages, Settings, Menu } from "lucide-react";
+import { Bell, Languages, Menu } from "lucide-react";
 import { SidebarTrigger } from "~/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {

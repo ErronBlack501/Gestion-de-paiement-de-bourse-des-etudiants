@@ -20,27 +20,6 @@ export default function AdminLayout() {
           <Topbar />
           <main className="flex-1">
             <div className="px-6 pt-6">
-              {/* Static Breadcrumbs */}
-              <Breadcrumb
-                className="text-muted-foreground flex items-center text-sm"
-                aria-label="Breadcrumb"
-              >
-                <BreadcrumbList className="flex items-center space-x-1">
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#" className="hover:underline">
-                      Home
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator>&#8250;</BreadcrumbSeparator>
-                  <BreadcrumbEllipsis>...</BreadcrumbEllipsis>
-                  <BreadcrumbSeparator>&#8250;</BreadcrumbSeparator>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#" className="hover:underline">
-                      Components
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
               <Outlet />
             </div>
           </main>
