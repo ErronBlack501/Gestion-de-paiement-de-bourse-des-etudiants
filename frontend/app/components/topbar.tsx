@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Children, useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Bell, Languages, Menu } from "lucide-react";
 import { SidebarTrigger } from "~/components/ui/sidebar";
@@ -15,7 +15,7 @@ export function Topbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="border-border relative flex h-16 flex-wrap items-center gap-2 border-b px-4 shadow-sm">
+    <div className="border-border flex h-16 flex-wrap items-center gap-2 border-b px-4 shadow-sm">
       {/* Sidebar Toggle */}
       <SidebarTrigger />
 

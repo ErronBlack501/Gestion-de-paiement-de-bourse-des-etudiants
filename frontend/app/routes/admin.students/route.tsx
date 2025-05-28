@@ -19,7 +19,7 @@ export default function StudentsPage({ loaderData }: Route.ComponentProps) {
         title="Étudiants"
         subtitle="Gérer les informations des étudiants"
       />
-      <div className="container mx-auto py-10">
+      <div className="container">
         <DataTable columns={columns} data={data} />
       </div>
     </>
