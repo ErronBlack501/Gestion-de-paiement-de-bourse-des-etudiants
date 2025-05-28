@@ -133,7 +133,7 @@ function SidebarProvider({
             {
               "--sidebar-width": SIDEBAR_WIDTH,
               "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-              backgroundColor: "#6EA56B",
+              backgroundColor: "#6096ba",
               ...style,
             } as React.CSSProperties
           }

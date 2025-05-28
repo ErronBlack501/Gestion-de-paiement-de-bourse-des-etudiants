@@ -18,10 +18,9 @@ export default function StudentsPage({ loaderData }: Route.ComponentProps) {
       <PageHeader
         title="Étudiants"
         subtitle="Gérer les informations des étudiants"
+        addLabel="Ajouter un étudiant"
       />
-      <div className="container">
-        <DataTable columns={columns} data={data} />
-      </div>
+      <DataTable columns={columns} data={data} />
     </>
   );
 }

@@ -80,7 +80,7 @@ export function DataTable<TData, TValue>({
         />
         <DataTableViewOptions table={table} />
       </div>
-      <div className="w-full overflow-auto rounded-md border">
+      <div className="my-2 w-full overflow-auto rounded-md border border-gray-300">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -106,6 +106,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className={row.index % 2 !== 0 ? "bg-gray-200" : ""}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
