@@ -1,5 +1,5 @@
 import { PageHeader } from "~/components/page-header";
-import { DataTable } from "~/routes/admin.students/data-table";
+import { DataTable } from "~/components/data-table";
 import { type Student, columns } from "~/routes/admin.students/columns";
 import type { Route } from ".react-router/types/app/routes/admin.students/+types/route";
 

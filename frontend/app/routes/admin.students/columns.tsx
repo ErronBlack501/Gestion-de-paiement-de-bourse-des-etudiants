@@ -10,6 +10,7 @@ import {
 import { ArrowUpDown, Ellipsis, Eye, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
+import { DataTableColumnHeader } from "~/components/data-table-column-header";
 
 dayjs.locale("fr");
 
@@ -56,26 +57,27 @@ export const columns: ColumnDef<Student>[] = [
   },
   {
     accessorKey: "name",
-    header: () => <div className="text-center">Nom</div>,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center"
+        column={column}
+        title="Nom"
+      />
+    ),
     cell: ({ row }) => (
       <div className="text-center">{row.getValue("name")}</div>
     ),
+    enableSorting: false,
   },
   {
     accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <div className="text-center">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            <span className="text-center">Email</span>
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="justify-center"
+        column={column}
+        title="Email"
+      />
+    ),
     cell: ({ row }) => (
       <div className="text-center">{row.getValue("email")}</div>
     ),
