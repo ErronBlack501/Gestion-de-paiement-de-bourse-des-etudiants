@@ -1,7 +1,21 @@
 import { PageHeader } from "~/components/page-header";
 import { DataTable } from "~/components/data-table";
-import { type Student, columns } from "~/routes/admin.students/columns";
+import { Button } from "~/components/ui/button";
+import { columns } from "~/routes/admin.students/columns";
 import type { Route } from ".react-router/types/app/routes/admin.students/+types/route";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "~/components/ui/dialog";
+import { Label } from "~/components/ui/label";
+import { Input } from "~/components/ui/input";
+import { CirclePlus } from "lucide-react";
+import StudentForm from "./action-form";
 
 export async function clientLoader() {
   const res = await fetch(
@@ -15,11 +29,18 @@ export default function StudentsPage({ loaderData }: Route.ComponentProps) {
   const data = loaderData;
   return (
     <>
-      <PageHeader
-        title="Étudiants"
-        subtitle="Gérer les informations des étudiants"
-        addLabel="Ajouter un étudiant"
-      />
+      <div className="flex items-center justify-between">
+        <PageHeader
+          title="Étudiants"
+          subtitle="Gérer les informations des étudiants"
+        />
+        <StudentForm>
+          <Button variant="secondary">
+            <CirclePlus />
+            Ajouter Étudiant
+          </Button>
+        </StudentForm>
+      </div>
       <DataTable columns={columns} data={data} />
     </>
   );

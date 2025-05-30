@@ -11,6 +11,15 @@ import { ArrowUpDown, Ellipsis, Eye, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { DataTableColumnHeader } from "~/components/data-table-column-header";
+import ActionForm from "~/routes/admin.students/action-form";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "~/components/ui/dialog";
 
 dayjs.locale("fr");
 
@@ -115,7 +124,7 @@ export const columns: ColumnDef<Student>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const students = row.original;
 
       return (
         <DropdownMenu>
@@ -126,16 +135,39 @@ export const columns: ColumnDef<Student>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
-              <SquarePen />
-              Modifier
+              <ActionForm
+                buttonLabel="Modifier"
+                dialogTitle="Modifier un Etudiant"
+                dialogDescription="Modifier les informations d'un étudiant."
+              >
+                <div className="flex items-center gap-2">
+                  <SquarePen /> Modifier{" "}
+                </div>
+              </ActionForm>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Eye />
               Détails
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Trash2 color="#ef4444" />
-              Supprimer
+              <Dialog>
+                <DialogTrigger>
+                  {" "}
+                  <Trash2 color="#ef4444" />
+                  Supprimer
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Confirmation de suppression</DialogTitle>
+                    <DialogDescription>
+                      Êtes-vous sûr de vouloir supprimer cet étudiant ? Cette
+                      action est irréversible et supprimera définitivement
+                      toutes les données associées à cet étudiant.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+              ;
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
