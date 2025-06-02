@@ -3,19 +3,14 @@ import {
   ClockAlert,
   Coins,
   CreditCard,
-  HelpCircleIcon,
   LayoutDashboardIcon,
-  SettingsIcon,
   Users,
 } from "lucide-react";
 
 import { NavMain } from "~/components/nav-main";
-import { NavSecondary } from "~/components/nav-secondary";
-import { NavUser } from "~/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -56,18 +51,6 @@ const data = {
       icon: ClockAlert,
     },
   ],
-  navSecondary: [
-    {
-      title: "Paramètres",
-      url: "#",
-      icon: SettingsIcon,
-    },
-    {
-      title: "Obtenir de l'aide",
-      url: "#",
-      icon: HelpCircleIcon,
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -94,11 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter className="bg-card-foreground">
-        <NavUser user={data.user} />
-      </SidebarFooter>
     </Sidebar>
   );
 }
