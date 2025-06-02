@@ -6,11 +6,20 @@ Thumbs.db
 *.swp
 *.swo
 *.sublime*
+
+# ========================
+# IDE Specific
+# ========================
+# VS Code
 .vscode/
+
+# IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 *.ipr
+
+# Eclipse/STS
 .apt_generated
 .classpath
 .factorypath
@@ -18,6 +27,16 @@ Thumbs.db
 .settings
 .springBeans
 .sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Storybook (uncomment if needed)
+# .storybook-static/
 
 # ========================
 # Dependency directories
@@ -34,7 +53,6 @@ node_modules/
 !**/src/test/**/target/
 
 # Frontend
-/dist/
 /out/
 /coverage/
 .next/
@@ -62,7 +80,6 @@ pnpm-debug.log*
 # ========================
 # Test and Coverage
 # ========================
-coverage/
 .nyc_output/
 
 # ========================
@@ -91,14 +108,3 @@ HELP.md
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
-
-# ========================
-# NetBeans
-# ========================
-/nbproject/private/
-/nbbuild/
-/nbdist/
-/.nb-gradle/
-
-# Uncomment if you use storybook
-# .storybook-static/
