@@ -6,9 +6,18 @@ Thumbs.db
 *.swp
 *.swo
 *.sublime*
-*.vscode/
+.vscode/
 .idea/
 *.iml
+*.iws
+*.ipr
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
 # ========================
 # Dependency directories
@@ -18,13 +27,22 @@ node_modules/
 # ========================
 # Build and Production
 # ========================
-build/
-dist/
-out/
-coverage/
+# Java/Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Frontend
+/dist/
+/out/
+/coverage/
 .next/
 .cache/
 .eslintcache
+/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 # ========================
 # Logs
@@ -52,6 +70,10 @@ coverage/
 # ========================
 *.local
 *.tgz
+*.bak
+*.tmp
+*.temp
+HELP.md
 
 # ========================
 # React/Remix/Router
@@ -71,11 +93,12 @@ yarn.lock
 pnpm-lock.yaml
 
 # ========================
-# Others
+# NetBeans
 # ========================
-*.bak
-*.tmp
-*.temp
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
 
 # Uncomment if you use storybook
 # .storybook-static/
