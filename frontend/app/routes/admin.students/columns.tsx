@@ -11,6 +11,7 @@ import { ArrowUpDown, Ellipsis, Eye, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { DataTableColumnHeader } from "~/components/data-table-column-header";
+import { DataTableRowActions } from "~/components/data-table-row-actions";
 import ActionForm from "~/routes/admin.students/action-form";
 import {
   Dialog,
@@ -123,55 +124,6 @@ export const columns: ColumnDef<Student>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const students = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Ellipsis />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <ActionForm
-                buttonLabel="Modifier"
-                dialogTitle="Modifier un Etudiant"
-                dialogDescription="Modifier les informations d'un étudiant."
-              >
-                <div className="flex items-center gap-2">
-                  <SquarePen /> Modifier{" "}
-                </div>
-              </ActionForm>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Eye />
-              Détails
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Dialog>
-                <DialogTrigger>
-                  {" "}
-                  <Trash2 color="#ef4444" />
-                  Supprimer
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Confirmation de suppression</DialogTitle>
-                    <DialogDescription>
-                      Êtes-vous sûr de vouloir supprimer cet étudiant ? Cette
-                      action est irréversible et supprimera définitivement
-                      toutes les données associées à cet étudiant.
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-              ;
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <DataTableRowActions student={row.original} />,
   },
 ];

@@ -25,11 +25,18 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 
+import type { Student } from "./columns";
+import * as React from "react";
+
 interface ActionFormProps {
   buttonLabel?: string;
   dialogTitle?: string;
   dialogDescription?: string;
   children?: React.ReactNode;
+  student?: Student;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onSuccess?: () => void;
 }
 
 export default function StudentForm({
@@ -37,9 +44,46 @@ export default function StudentForm({
   dialogTitle = "Gestion des Étudiants",
   dialogDescription = "Ajouter ou modifier les informations d'un étudiant",
   children,
+  student,
+  open: externalOpen,
+  onOpenChange,
+  onSuccess,
 }: ActionFormProps) {
+  const [internalOpen, setInternalOpen] = React.useState(false);
+  const open = externalOpen !== undefined ? externalOpen : internalOpen;
+  
+  const handleOpenChange = (newOpen: boolean) => {
+    if (onOpenChange) {
+      onOpenChange(newOpen);
+    } else {
+      setInternalOpen(newOpen);
+    }
+  };
+  const [formData, setFormData] = React.useState({
+    name: student?.name || "",
+    email: student?.email || "",
+    sex: student?.sex as "male" | "female" | "" || "",
+    dateOfBirth: student?.dateOfBirth ? new Date(student.dateOfBirth) : new Date(),
+    // Add other fields as needed
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement form submission logic
+    console.log("Form submitted:", formData);
+    if (onSuccess) onSuccess();
+    handleOpenChange(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {children || <Button variant="outline">{buttonLabel}</Button>}
       </DialogTrigger>
@@ -48,6 +92,7 @@ export default function StudentForm({
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
+        <form onSubmit={handleSubmit}>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="matricule" className="text-right">
@@ -148,9 +193,15 @@ export default function StudentForm({
             </Select>
           </div>
         </div>
-        <DialogFooter>
-          <Button type="submit">Enregistrer</Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
+              Annuler
+            </Button>
+            <Button type="submit">
+              {student ? "Mettre à jour" : "Créer"}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
