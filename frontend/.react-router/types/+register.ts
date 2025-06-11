@@ -15,5 +15,8 @@ type Params = {
   "/register": {};
   "/login": {};
   "/admin": {};
+  "/admin/latecomers": {};
+  "/admin/payments": {};
   "/admin/students": {};
+  "/admin/amounts": {};
 };

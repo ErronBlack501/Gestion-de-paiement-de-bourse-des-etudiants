@@ -14,9 +14,9 @@ export function RegisterForm({
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Create an account</h1>
+        <h1 className="text-2xl font-bold">Créer un compte</h1>
         <p className="text-muted-foreground text-sm text-balance">
-          Enter your details below to create your account
+          Entrez vos informations ci-dessous pour créer votre compte.
         </p>
       </div>
       <div className="grid gap-6">
@@ -28,7 +28,7 @@ export function RegisterForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="password">
-            Password <span className="text-red-600">*</span>
+            Mot de passe <span className="text-red-600">*</span>
           </Label>
           <div className="relative">
             <Input
@@ -42,7 +42,11 @@ export function RegisterForm({
               tabIndex={-1}
               onClick={() => setShowPassword((v) => !v)}
               className="text-muted-foreground absolute inset-y-0 right-0 flex items-center px-3"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={
+                showPassword
+                  ? "Masquer le mot de passe"
+                  : "Afficher le mot de passe"
+              }
             >
               {showPassword ? (
                 // Eye open icon
@@ -98,7 +102,7 @@ export function RegisterForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="confirm-password">
-            Confirm Password <span className="text-red-600">*</span>
+            Confirmer le mot de passe <span className="text-red-600">*</span>
           </Label>
           <div className="relative">
             <Input
@@ -113,7 +117,9 @@ export function RegisterForm({
               onClick={() => setShowConfirmPassword((v) => !v)}
               className="text-muted-foreground absolute inset-y-0 right-0 flex items-center px-3"
               aria-label={
-                showConfirmPassword ? "Hide password" : "Show password"
+                showConfirmPassword
+                  ? "Masquer le mot de passe"
+                  : "Afficher le mot de passe"
               }
             >
               {showConfirmPassword ? (
@@ -169,26 +175,26 @@ export function RegisterForm({
           </div>
         </div>
         <Button type="submit" className="w-full">
-          Register
+          Créer un compte
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
-            Or continue with
+            Ou continuer avec
           </span>
         </div>
         <Button variant="outline" className="w-full">
           <img
             src="/google-logo.png"
-            alt="Google logo"
+            alt="Logo Google"
             className="mr-2 inline-block h-5 w-5 align-middle"
           />
-          Continue with Google
+          Continuer avec Google
         </Button>
       </div>
       <div className="text-center text-sm">
-        Already have an account?{" "}
+        Vous avez déjà un compte ?{" "}
         <Link to="/login" className="underline underline-offset-4">
-          Sign in
+          Se connecter
         </Link>
       </div>
     </form>

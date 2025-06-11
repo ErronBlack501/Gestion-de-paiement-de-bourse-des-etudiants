@@ -12,9 +12,10 @@ export function LoginForm({
   return (
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Login to your account</h1>
+        <h1 className="text-2xl font-bold">Connexion à votre compte</h1>
         <p className="text-muted-foreground text-sm text-balance">
-          Enter your email below to login to your account
+          Saisissez votre email ci-dessous pour accéder à votre espace
+          personnel.
         </p>
       </div>
       <div className="grid gap-6">
@@ -33,13 +34,13 @@ export function LoginForm({
         <div className="grid gap-3">
           <div className="flex items-center">
             <Label htmlFor="password">
-              Password <span className="text-red-600">*</span>
+              Mot de passe <span className="text-red-600">*</span>
             </Label>
             <a
               href="#"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
-              Forgot your password?
+              Mot de passe oublié&nbsp;?
             </a>
           </div>
           <Input
@@ -53,26 +54,26 @@ export function LoginForm({
           type="submit"
           className="bg-primary text-primary-foreground hover:bg-primary/90 w-full"
         >
-          Login
+          Se connecter
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
-            Or continue with
+            Ou continuer avec
           </span>
         </div>
         <Button variant="outline" className="w-full">
           <img
             src="/google-logo.png"
-            alt="Google logo"
+            alt="Logo Google"
             className="mr-2 inline-block h-5 w-5 align-middle"
           />
-          Continue with Google
+          Continuer avec Google
         </Button>
       </div>
       <div className="text-center text-sm">
-        Don&apos;t have an account?{" "}
+        Vous n&apos;avez pas de compte&nbsp;?{" "}
         <Link to="/register" className="underline underline-offset-4">
-          Sign up
+          Créer un compte
         </Link>
       </div>
     </form>

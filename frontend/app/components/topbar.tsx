@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { Input } from "~/components/ui/input";
-import { Bell, Languages, Menu, UserCircle, LogOut, Settings, HelpCircle, X } from "lucide-react";
+import {
+  Bell,
+  Languages,
+  Menu,
+  UserCircle,
+  LogOut,
+  Settings,
+  HelpCircle,
+  X,
+} from "lucide-react";
 import { SidebarTrigger } from "~/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
@@ -17,7 +26,7 @@ import { Button } from "~/components/ui/button";
 const user = {
   name: "Admin User",
   email: "admin@example.com",
-  avatar: "/default-avatar.svg"
+  avatar: "/default-avatar.svg",
 };
 
 type MenuItem = {
@@ -27,11 +36,11 @@ type MenuItem = {
   separator?: boolean;
   desktopOnly?: boolean;
   mobileOnly?: boolean;
-}
+};
 
 export function Topbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [hasNotifications, setHasNotifications] = useState(true);
+  const [hasNotifications, setHasNotifications] = useState(false);
 
   const userMenuItems: MenuItem[] = [
     {
@@ -66,14 +75,10 @@ export function Topbar() {
   ];
 
   // Menu items for mobile dropdown
-  const mobileMenuItems = userMenuItems.filter(
-    (item) => !item.desktopOnly
-  );
+  const mobileMenuItems = userMenuItems.filter((item) => !item.desktopOnly);
 
   // Menu items for desktop user dropdown
-  const desktopUserMenuItems = userMenuItems.filter(
-    (item) => !item.mobileOnly
-  );
+  const desktopUserMenuItems = userMenuItems.filter((item) => !item.mobileOnly);
 
   const renderMenuItem = (item: MenuItem, index: number) => {
     if (item.separator) {
@@ -99,19 +104,17 @@ export function Topbar() {
   return (
     <div className="border-border flex h-16 items-center justify-between border-b px-4 shadow-sm">
       <div className="flex items-center gap-2">
-        {/* Sidebar Toggle - Mobile */}
-        <div className="sm:hidden">
+        <div>
           <SidebarTrigger />
         </div>
-
         {/* Search input */}
-        <div className="relative hidden sm:block">
+        <div className="relative flex items-center">
           <Input
             type="text"
             placeholder="Rechercher…"
             className="border-border w-64 rounded-lg border py-1.5 pr-10 pl-3 shadow-sm focus:ring-2 focus:outline-none"
           />
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs">
+          <span className="absolute top-1/2 right-2 -translate-y-1/2 text-xs">
             ⌘K
           </span>
         </div>
@@ -130,21 +133,24 @@ export function Topbar() {
           >
             <Bell className="h-5 w-5" />
             {hasNotifications && (
-              <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-red-500" />
+              <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-red-500" />
             )}
           </button>
 
           {/* Desktop User Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0">
+              <Button
+                variant="ghost"
+                className="relative h-8 w-8 rounded-full p-0"
+              >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback>
                     {user.name
-                      .split(' ')
+                      .split(" ")
                       .map((n) => n[0])
-                      .join('')}
+                      .join("")}
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -152,7 +158,9 @@ export function Topbar() {
             <DropdownMenuContent className="w-56" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user.name}</p>
+                  <p className="text-sm leading-none font-medium">
+                    {user.name}
+                  </p>
                   <p className="text-muted-foreground text-xs leading-none">
                     {user.email}
                   </p>
@@ -161,7 +169,7 @@ export function Topbar() {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 {desktopUserMenuItems.map((item, index) =>
-                  renderMenuItem(item, index)
+                  renderMenuItem(item, index),
                 )}
               </DropdownMenuGroup>
             </DropdownMenuContent>
@@ -189,23 +197,21 @@ export function Topbar() {
             className="absolute inset-0 bg-black/20"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="absolute right-0 top-0 z-50 h-full w-4/5 max-w-sm bg-white p-4 shadow-lg">
+          <div className="absolute top-0 right-0 z-50 h-full w-4/5 max-w-sm bg-white p-4 shadow-lg">
             <div className="mb-4 flex items-center justify-between border-b pb-4">
               <div className="flex items-center gap-3">
                 <Avatar className="h-10 w-10">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback>
                     {user.name
-                      .split(' ')
+                      .split(" ")
                       .map((n) => n[0])
-                      .join('')}
+                      .join("")}
                   </AvatarFallback>
                 </Avatar>
                 <div>
                   <p className="font-medium">{user.name}</p>
-                  <p className="text-muted-foreground text-sm">
-                    {user.email}
-                  </p>
+                  <p className="text-muted-foreground text-sm">{user.email}</p>
                 </div>
               </div>
               <button
@@ -217,7 +223,7 @@ export function Topbar() {
             </div>
             <div className="space-y-1">
               {mobileMenuItems.map((item, index) =>
-                renderMenuItem(item, index)
+                renderMenuItem(item, index),
               )}
             </div>
           </div>

@@ -4,24 +4,18 @@ import "dayjs/locale/fr";
 import { Checkbox } from "~/components/ui/checkbox";
 import { DataTableColumnHeader } from "~/components/data-table-column-header";
 import { DataTableRowActions } from "~/components/data-table-row-actions";
-import {
-  StudentViewDialog,
-  StudentEditDialog,
-  StudentDeleteDialog,
-} from "~/components/student-dialogs";
 
 dayjs.locale("fr");
 
-export type Student = {
-  id: string;
-  name: string;
-  email: string;
-  sex: "male" | "female";
-  dateOfBirth: string;
-  createdAt: string;
+export type Payment = {
+  idPaye: string;
+  pMatricule: string;
+  anneeUniv: string;
+  date: string;
+  nbrMois: number;
 };
 
-export const columns: ColumnDef<Student>[] = [
+export const columns: ColumnDef<Payment>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -112,31 +106,6 @@ export const columns: ColumnDef<Student>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => (
-      <DataTableRowActions
-        row={row.original}
-        renderViewDialog={(student, open, onOpenChange) => (
-          <StudentViewDialog
-            student={student}
-            open={open}
-            onOpenChange={onOpenChange}
-          />
-        )}
-        renderEditDialog={(student, open, onOpenChange) => (
-          <StudentEditDialog
-            student={student}
-            open={open}
-            onOpenChange={onOpenChange}
-          />
-        )}
-        renderDeleteDialog={(student, open, onOpenChange) => (
-          <StudentDeleteDialog
-            student={student}
-            open={open}
-            onOpenChange={onOpenChange}
-          />
-        )}
-      />
-    ),
+    cell: ({ row }) => <DataTableRowActions student={row.original} />,
   },
 ];
