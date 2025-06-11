@@ -3,17 +3,6 @@ import { DataTable } from "~/components/data-table";
 import { Button } from "~/components/ui/button";
 import { columns } from "~/routes/admin.students/columns";
 import type { Route } from ".react-router/types/app/routes/admin.students/+types/route";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "~/components/ui/dialog";
-import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
 import { CirclePlus } from "lucide-react";
 import StudentForm from "./action-form";
 
