@@ -6,24 +6,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Eye, Pencil, Trash2 } from "lucide-react"; // Ajout des icônes
 
 interface DataTableRowActionsProps<T> {
   row: T;
   renderViewDialog?: (
     row: T,
     open: boolean,
-    onOpenChange: (open: boolean) => void
+    onOpenChange: (open: boolean) => void,
   ) => React.ReactNode;
   renderEditDialog?: (
     row: T,
     open: boolean,
-    onOpenChange: (open: boolean) => void
+    onOpenChange: (open: boolean) => void,
   ) => React.ReactNode;
   renderDeleteDialog?: (
     row: T,
     open: boolean,
-    onOpenChange: (open: boolean) => void
+    onOpenChange: (open: boolean) => void,
   ) => React.ReactNode;
 }
 
@@ -49,11 +49,13 @@ export function DataTableRowActions<T>({
         <DropdownMenuContent align="end">
           {renderViewDialog && (
             <DropdownMenuItem onSelect={() => setIsViewDialogOpen(true)}>
+              <Eye className="mr-2 h-4 w-4" />
               Voir les détails
             </DropdownMenuItem>
           )}
           {renderEditDialog && (
             <DropdownMenuItem onSelect={() => setIsEditDialogOpen(true)}>
+              <Pencil className="mr-2 h-4 w-4" />
               Modifier
             </DropdownMenuItem>
           )}
@@ -62,6 +64,7 @@ export function DataTableRowActions<T>({
               className="text-destructive focus:text-destructive"
               onSelect={() => setIsDeleteDialogOpen(true)}
             >
+              <Trash2 className="text-destructive mr-2 h-4 w-4" />
               Supprimer
             </DropdownMenuItem>
           )}
