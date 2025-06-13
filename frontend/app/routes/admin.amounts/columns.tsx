@@ -10,8 +10,7 @@ dayjs.locale("fr");
 export type Amount = {
   idNiv: string;
   niveau: string;
-  montant: string;
-  updatedAt?: string;
+  montant: number | string;
 };
 
 export const columns: ColumnDef<Amount>[] = [
@@ -98,6 +97,6 @@ export const columns: ColumnDef<Amount>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions amount={row.original} />,
+    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ];
