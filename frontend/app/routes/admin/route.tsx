@@ -2,7 +2,7 @@ import { SidebarProvider } from "~/components/ui/sidebar";
 import { AppSidebar } from "~/components/app-sidebar";
 import { Outlet } from "react-router";
 import { Topbar } from "~/components/topbar";
-
+import { Toaster } from "sonner";
 export default function AdminLayout() {
   return (
     <SidebarProvider className="px-1 py-2">
@@ -15,6 +15,7 @@ export default function AdminLayout() {
               <Outlet />
             </div>
           </main>
+          <Toaster />
         </div>
       </div>
     </SidebarProvider>

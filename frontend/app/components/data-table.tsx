@@ -10,7 +10,6 @@ import {
   getFilteredRowModel,
   type ColumnFiltersState,
 } from "@tanstack/react-table";
-import { Button } from "~/components/ui/button";
 import * as React from "react";
 
 import {
@@ -70,14 +69,16 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <div className="flex items-center py-2">
-        <Input
-          placeholder="Filtrer par emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {table.getColumn("nom") && (
+          <Input
+            placeholder="Filtrer par nom..."
+            value={(table.getColumn("nom")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("nom")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
         <DataTableViewOptions table={table} />
       </div>
       <div className="my-2 w-full overflow-auto rounded-md border border-gray-300">

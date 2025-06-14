@@ -13,12 +13,13 @@ import {
 dayjs.locale("fr");
 
 export type Student = {
-  id: string;
-  name: string;
-  email: string;
-  sex: "male" | "female";
-  dateOfBirth: string;
-  createdAt: string;
+  matricule: string;
+  nom: string;
+  sexe: "H" | "F";
+  mail: string;
+  datenais: string;
+  montant: string | null;
+  etab: string | null;
 };
 
 export const columns: ColumnDef<Student>[] = [
@@ -45,16 +46,16 @@ export const columns: ColumnDef<Student>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: () => <div className="text-center">Id</div>,
+    accessorKey: "matricule",
+    header: () => <div className="text-center">Matricule</div>,
     cell: ({ row }) => (
       <div className="text-center">
-        {(row.getValue("id") as string).slice(0, 8)}
+        {(row.getValue("matricule") as string).slice(0, 8)}
       </div>
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "nom",
     header: ({ column }) => (
       <DataTableColumnHeader
         className="text-center"
@@ -62,13 +63,23 @@ export const columns: ColumnDef<Student>[] = [
         title="Nom"
       />
     ),
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("name")}</div>
-    ),
+    cell: ({ row }) => <div className="text-center">{row.getValue("nom")}</div>,
     enableSorting: false,
   },
   {
-    accessorKey: "email",
+    accessorKey: "sexe",
+    header: () => <div className="text-center">Sexe</div>,
+    cell: ({ row }) => {
+      const sex = row.getValue("sexe") as string;
+      return (
+        <div className="text-center capitalize">
+          {sex === "H" ? "Homme" : "Femme"}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "mail",
     header: ({ column }) => (
       <DataTableColumnHeader
         className="justify-center"
@@ -77,37 +88,34 @@ export const columns: ColumnDef<Student>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="text-center">{row.getValue("email")}</div>
+      <div className="text-center">{row.getValue("mail")}</div>
+    ),
+    enableSorting: false,
+  },
+  {
+    accessorKey: "montant",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="justify-center"
+        column={column}
+        title="Niveau"
+      />
+    ),
+    cell: ({ row }) => (
+      <div className="text-center">{row.getValue("montant")}</div>
     ),
   },
   {
-    accessorKey: "sex",
-    header: () => <div className="text-center">Sexe</div>,
-    cell: ({ row }) => {
-      const sex = row.getValue("sex") as string;
-      return (
-        <div className="text-center capitalize">
-          {sex === "male" ? "Homme" : "Femme"}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "dateOfBirth",
-    header: () => <div className="text-center">Date de naissance</div>,
-    cell: ({ row }) => (
-      <div className="text-center">
-        {dayjs(row.getValue("dateOfBirth")).format("DD/MM/YYYY")}
-      </div>
+    accessorKey: "etab",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="justify-center"
+        column={column}
+        title="Etablissement"
+      />
     ),
-  },
-  {
-    accessorKey: "createdAt",
-    header: () => <div className="text-center">Créé le</div>,
     cell: ({ row }) => (
-      <div className="text-center">
-        {dayjs(row.getValue("createdAt")).format("DD/MM/YYYY à HH:mm")}
-      </div>
+      <div className="text-center">{row.getValue("etab")}</div>
     ),
   },
   {

@@ -36,7 +36,7 @@ const data = {
       icon: Users,
     },
     {
-      title: "Montant",
+      title: "Montants",
       url: "/admin/amounts",
       icon: Coins,
     },

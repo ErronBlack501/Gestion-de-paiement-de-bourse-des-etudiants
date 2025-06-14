@@ -8,7 +8,7 @@ import { DataTableRowActions } from "~/components/data-table-row-actions";
 dayjs.locale("fr");
 
 export type Amount = {
-  idNiv: string;
+  idniv: string;
   niveau: string;
   montant: number | string;
 };
@@ -37,7 +37,7 @@ export const columns: ColumnDef<Amount>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "idNiv",
+    accessorKey: "idniv",
     header: ({ column }) => (
       <DataTableColumnHeader
         className="text-center"
@@ -46,8 +46,9 @@ export const columns: ColumnDef<Amount>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="text-center">{row.getValue("idNiv")}</div>
+      <div className="text-center">{row.getValue("idniv")}</div>
     ),
+    enableSorting: false,
   },
   {
     accessorKey: "niveau",
@@ -61,7 +62,7 @@ export const columns: ColumnDef<Amount>[] = [
     cell: ({ row }) => (
       <div className="text-center">{row.getValue("niveau")}</div>
     ),
-    enableSorting: true,
+    enableSorting: false,
   },
   {
     accessorKey: "montant",
@@ -69,31 +70,20 @@ export const columns: ColumnDef<Amount>[] = [
       <DataTableColumnHeader
         className="text-center"
         column={column}
-        title="Montant (FCFA)"
+        title="Montant"
       />
     ),
     cell: ({ row }) => {
       const montant = row.getValue("montant");
       return (
         <div className="text-center font-medium">
-          {montant ? `${parseInt(montant as string).toLocaleString('fr-FR')} FCFA` : '-'}
+          {montant
+            ? `${parseInt(montant as string).toLocaleString("fr-FR")} Ar`
+            : "-"}
         </div>
       );
     },
-    enableSorting: true,
-  },
-  {
-    accessorKey: "updatedAt",
-    header: () => <div className="text-center">Dernière mise à jour</div>,
-    cell: ({ row }) => {
-      const updatedAt = row.getValue("updatedAt");
-      return (
-        <div className="text-center">
-          {updatedAt ? dayjs(updatedAt as string).format("DD/MM/YYYY à HH:mm") : "-"}
-        </div>
-      );
-    },
-    enableSorting: true,
+    enableSorting: false,
   },
   {
     id: "actions",

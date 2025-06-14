@@ -126,9 +126,8 @@ export default function StudentForm({
                   <SelectValue placeholder="Sélectionner" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="M">Masculin</SelectItem>
-                  <SelectItem value="F">Féminin</SelectItem>
-                  <SelectItem value="A">Autre</SelectItem>
+                  <SelectItem value="H">Homme</SelectItem>
+                  <SelectItem value="F">Femme</SelectItem>
                 </SelectContent>
               </Select>
             </div>
