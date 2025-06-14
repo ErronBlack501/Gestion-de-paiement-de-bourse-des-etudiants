@@ -34,11 +34,9 @@ export async function clientAction({ request }: { request: Request }) {
 
 export default function AmountsPage({ loaderData }: Route.ComponentProps) {
   const data = loaderData;
-  let fetcher = useFetcher();
-
   // Define a handler to be called on success
   const handleSuccess = () => {
-    toast("L'ajout du montant a été un succès.");
+    toast.success("L'ajout du montant a été un succès.");
   };
 
   return (
