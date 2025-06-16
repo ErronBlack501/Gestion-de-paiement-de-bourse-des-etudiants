@@ -1,12 +1,12 @@
 import { PageHeader } from "~/components/page-header";
 import { DataTable } from "~/components/data-table";
-import { columns } from "~/routes/admin.amounts/columns";
+import { columns, type Amount } from "~/routes/admin.amounts/columns";
 import type { Route } from ".react-router/types/app/routes/admin.students/+types/route";
 import { CirclePlus } from "lucide-react";
 import AmountCreateForm from "~/components/amount-create-form";
 import { Button } from "~/components/ui/button";
-import { useFetcher } from "react-router";
 import { toast } from "sonner";
+import { useFetcher } from "react-router";
 
 export async function clientLoader() {
   const res = await fetch("http://localhost:8080/montants");
@@ -14,31 +14,73 @@ export async function clientLoader() {
   return data;
 }
 
-export async function clientAction({ request }: { request: Request }) {
+export async function clientAction({ request }: Route.ClientActionArgs) {
   let formData = await request.formData();
+  const action = formData.get("_action");
+
+  if (action === "edit") {
+    // Modification d'un montant
+    const idniv = formData.get("idniv");
+    const niveau = formData.get("niveau");
+    const montant = formData.get("montant");
+    const response = await fetch(
+      `http://localhost:8080/update/montant/${idniv}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ niveau, montant }),
+      },
+    );
+    if (!response.ok) throw new Error("Failed to edit amount");
+    return {
+      success: true,
+      action: "edit",
+      message: "Montant modifié avec succès.",
+    };
+  }
+
+  if (action === "delete") {
+    // Suppression d'un montant
+    const idniv = formData.get("idniv");
+    const response = await fetch(
+      `http://localhost:8080/delete/montant/${idniv}`,
+      {
+        method: "DELETE",
+      },
+    );
+    if (!response.ok) throw new Error("Failed to delete amount");
+    return {
+      success: true,
+      action: "delete",
+      message: "Montant supprimé avec succès.",
+    };
+  }
+
+  // Par défaut : création
+  const niveau = formData.get("niveau");
+  const montant = formData.get("montant");
   const response = await fetch("http://localhost:8080/add/montant", {
     headers: {
       "Content-Type": "application/json",
     },
     method: "POST",
     body: JSON.stringify({
-      niveau: formData.get("niveau"),
-      montant: formData.get("montant"),
+      niveau,
+      montant,
     }),
   });
   if (!response.ok) {
     throw new Error("Failed to create amount");
   }
-  return { success: true };
+  return {
+    success: true,
+    action: "create",
+    message: "Montant créé avec succès.",
+  };
 }
 
 export default function AmountsPage({ loaderData }: Route.ComponentProps) {
-  const data = loaderData;
-  // Define a handler to be called on success
-  const handleSuccess = () => {
-    toast.success("L'ajout du montant a été un succès.");
-  };
-
+  const data: Amount[] = loaderData;
   return (
     <>
       <div className="flex items-center justify-between">
@@ -47,7 +89,6 @@ export default function AmountsPage({ loaderData }: Route.ComponentProps) {
           subtitle="Gérer les informations des montants"
         />
         <AmountCreateForm
-          onSuccess={handleSuccess}
           trigger={
             <Button variant="secondary">
               <CirclePlus />

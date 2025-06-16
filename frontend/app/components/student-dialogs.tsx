@@ -28,19 +28,25 @@ export function StudentViewDialog({
         </DialogHeader>
         <div>
           <div>
-            <b>Nom :</b> {student.name}
+            <b>Matricule :</b> {student.matricule}
           </div>
           <div>
-            <b>Email :</b> {student.email}
+            <b>Nom :</b> {student.nom}
           </div>
           <div>
-            <b>Sexe :</b> {student.sex === "male" ? "Homme" : "Femme"}
+            <b>Email :</b> {student.mail}
           </div>
           <div>
-            <b>Date de naissance :</b> {student.dateOfBirth}
+            <b>Sexe :</b> {student.sexe === "H" ? "Homme" : "Femme"}
           </div>
           <div>
-            <b>Créé le :</b> {student.createdAt}
+            <b>Date de naissance :</b> {student.datenais}
+          </div>
+          <div>
+            <b>Niveau :</b> {student.montant}
+          </div>
+          <div>
+            <b>Établissement :</b> {student.etab}
           </div>
         </div>
         <DialogFooter>
@@ -60,13 +66,15 @@ export function StudentEditDialog({
   student: Student;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit?: (values: Omit<Student, "id" | "createdAt">) => void;
+  onSubmit?: (values: Omit<Student, "matricule">) => void;
 }) {
-  const [form, setForm] = React.useState<Omit<Student, "id" | "createdAt">>({
-    name: student.name,
-    email: student.email,
-    sex: student.sex,
-    dateOfBirth: student.dateOfBirth,
+  const [form, setForm] = React.useState<Omit<Student, "matricule">>({
+    nom: student.nom,
+    sexe: student.sexe,
+    mail: student.mail,
+    datenais: student.datenais,
+    montant: student.montant,
+    etab: student.etab,
   });
 
   const handleChange = (
@@ -85,10 +93,12 @@ export function StudentEditDialog({
   React.useEffect(() => {
     if (open) {
       setForm({
-        name: student.name,
-        email: student.email,
-        sex: student.sex,
-        dateOfBirth: student.dateOfBirth,
+        nom: student.nom,
+        sexe: student.sexe,
+        mail: student.mail,
+        datenais: student.datenais,
+        montant: student.montant,
+        etab: student.etab,
       });
     }
   }, [open, student]);
@@ -101,58 +111,72 @@ export function StudentEditDialog({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label>ID</Label>
-            <Input value={student.id} disabled />
+            <Label>Matricule</Label>
+            <Input value={student.matricule} disabled />
           </div>
           <div>
-            <Label htmlFor="name">Nom</Label>
+            <Label htmlFor="nom">Nom</Label>
             <Input
-              id="name"
-              name="name"
-              value={form.name}
+              id="nom"
+              name="nom"
+              value={form.nom}
               onChange={handleChange}
               required
             />
           </div>
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="mail">Email</Label>
             <Input
-              id="email"
-              name="email"
+              id="mail"
+              name="mail"
               type="email"
-              value={form.email}
+              value={form.mail}
               onChange={handleChange}
               required
             />
           </div>
           <div>
-            <Label htmlFor="sex">Sexe</Label>
+            <Label htmlFor="sexe">Sexe</Label>
             <select
-              id="sex"
-              name="sex"
-              value={form.sex}
+              id="sexe"
+              name="sexe"
+              value={form.sexe}
               onChange={handleChange}
               className="bg-input border-border text-foreground w-full rounded-md border px-3 py-2"
               required
             >
-              <option value="male">Homme</option>
-              <option value="female">Femme</option>
+              <option value="H">Homme</option>
+              <option value="F">Femme</option>
             </select>
           </div>
           <div>
-            <Label htmlFor="dateOfBirth">Date de naissance</Label>
+            <Label htmlFor="datenais">Date de naissance</Label>
             <Input
-              id="dateOfBirth"
-              name="dateOfBirth"
+              id="datenais"
+              name="datenais"
               type="date"
-              value={form.dateOfBirth}
+              value={form.datenais}
               onChange={handleChange}
               required
             />
           </div>
           <div>
-            <Label>Créé le</Label>
-            <Input value={student.createdAt} disabled />
+            <Label htmlFor="montant">Niveau</Label>
+            <Input
+              id="montant"
+              name="montant"
+              value={form.montant ?? ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <Label htmlFor="etab">Établissement</Label>
+            <Input
+              id="etab"
+              name="etab"
+              value={form.etab ?? ""}
+              onChange={handleChange}
+            />
           </div>
           <DialogFooter>
             <Button
@@ -186,7 +210,7 @@ export function StudentDeleteDialog({
           <DialogTitle>Supprimer l'étudiant</DialogTitle>
         </DialogHeader>
         <div>
-          Es-tu sûr de vouloir supprimer <b>{student.name}</b> ?
+          Es-tu sûr de vouloir supprimer <b>{student.nom}</b> ?
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>

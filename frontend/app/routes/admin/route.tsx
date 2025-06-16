@@ -15,7 +15,7 @@ export default function AdminLayout() {
               <Outlet />
             </div>
           </main>
-          <Toaster />
+          <Toaster richColors />
         </div>
       </div>
     </SidebarProvider>

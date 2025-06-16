@@ -4,6 +4,12 @@ import "dayjs/locale/fr";
 import { Checkbox } from "~/components/ui/checkbox";
 import { DataTableColumnHeader } from "~/components/data-table-column-header";
 import { DataTableRowActions } from "~/components/data-table-row-actions";
+import {
+  AmountViewDialog,
+  AmountEditDialog,
+  AmountDeleteDialog,
+} from "~/components/amount-dialogs";
+import { toast } from "sonner";
 
 dayjs.locale("fr");
 
@@ -87,6 +93,34 @@ export const columns: ColumnDef<Amount>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => (
+      <DataTableRowActions
+        row={row}
+        renderViewDialog={(row, open, onOpenChange) => (
+          <AmountViewDialog
+            amount={row.original}
+            open={open}
+            onOpenChange={onOpenChange}
+          />
+        )}
+        renderEditDialog={(row, open, onOpenChange) => (
+          <AmountEditDialog
+            onSuccess={() => {
+              toast.success("Montant modifié avec succès.");
+            }}
+            amount={row.original}
+            open={open}
+            onOpenChange={onOpenChange}
+          />
+        )}
+        renderDeleteDialog={(row, open, onOpenChange) => (
+          <AmountDeleteDialog
+            amount={row.original}
+            open={open}
+            onOpenChange={onOpenChange}
+          />
+        )}
+      />
+    ),
   },
 ];
