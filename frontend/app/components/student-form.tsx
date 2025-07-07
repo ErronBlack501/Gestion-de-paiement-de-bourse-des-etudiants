@@ -26,6 +26,7 @@ import {
 } from "~/components/ui/select";
 import type { Student } from "../routes/admin.students/columns";
 import * as React from "react";
+import { format } from "date-fns";
 
 interface ActionFormProps {
   buttonLabel?: string;
@@ -59,19 +60,26 @@ export default function StudentForm({
     }
   };
   const [formData, setFormData] = React.useState({
-    name: student?.name || "",
-    email: student?.email || "",
-    sex: (student?.sex as "male" | "female" | "") || "",
-    dateOfBirth: student?.dateOfBirth
-      ? new Date(student.dateOfBirth)
-      : new Date(),
-    // Add other fields as needed
+    matricule: student?.matricule || "",
+    nom: student?.nom || "",
+    sexe: (student?.sexe as "H" | "F" | "") || "",
+    mail: student?.mail || "",
+    datenais: student?.datenais ? new Date(student.datenais) : new Date(),
+    etab: student?.etab || "",
+    montant: student?.montant || "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implement form submission logic
-    console.log("Form submitted:", formData);
+    const payload = {
+      ...formData,
+      datenais:
+        formData.datenais instanceof Date
+          ? format(formData.datenais, "yyyy-MM-dd")
+          : formData.datenais,
+    };
+    console.log("Form submitted:", payload);
     if (onSuccess) onSuccess();
     handleOpenChange(false);
   };
@@ -83,6 +91,7 @@ export default function StudentForm({
       [name]: value,
     }));
   };
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
@@ -101,8 +110,12 @@ export default function StudentForm({
               </Label>
               <Input
                 id="matricule"
+                name="matricule"
                 placeholder="Numéro de matricule"
                 className="col-span-3"
+                value={formData.matricule}
+                onChange={handleChange}
+                required
               />
             </div>
 
@@ -112,8 +125,12 @@ export default function StudentForm({
               </Label>
               <Input
                 id="nom"
+                name="nom"
                 placeholder="Nom et prénom"
                 className="col-span-3"
+                value={formData.nom}
+                onChange={handleChange}
+                required
               />
             </div>
 
@@ -121,7 +138,13 @@ export default function StudentForm({
               <Label htmlFor="sexe" className="text-right">
                 Sexe
               </Label>
-              <Select>
+              <Select
+                value={formData.sexe}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, sexe: value as "H" | "F" }))
+                }
+                required
+              >
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Sélectionner" />
                 </SelectTrigger>
@@ -143,24 +166,58 @@ export default function StudentForm({
                     className="col-span-3 justify-start text-left font-normal"
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    Choisir une date
+                    {formData.datenais
+                      ? format(formData.datenais, "dd/MM/yyyy")
+                      : "Choisir une date"}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" initialFocus />
+                  <Calendar
+                    mode="single"
+                    selected={formData.datenais}
+                    onSelect={(date) =>
+                      date &&
+                      setFormData((prev) => ({ ...prev, datenais: date }))
+                    }
+                    initialFocus
+                  />
                 </PopoverContent>
               </Popover>
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="institution" className="text-right">
+              <Label htmlFor="etab" className="text-right">
                 Institution
               </Label>
-              <Input
-                id="institution"
-                placeholder="Établissement d'origine"
-                className="col-span-3"
-              />
+              <Select
+                value={formData.etab}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, etab: value }))
+                }
+                required
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Sélectionner l'institution" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ENI">ENI</SelectItem>
+                  <SelectItem value="EMIT">EMIT</SelectItem>
+                  <SelectItem value="SCIENCES">SCIENCES</SelectItem>
+                  <SelectItem value="MEDECINE">MEDECINE</SelectItem>
+                  <SelectItem value="DEGSS - DROIT ET SCIENCES SOCIALES">
+                    DROIT ET SCIENCES SOCIALES
+                  </SelectItem>
+                  <SelectItem value="ECONOMIE-ET-GESTION">
+                    ECONOMIE ET GESTION
+                  </SelectItem>
+                  <SelectItem value="FLSH">FLSH</SelectItem>
+                  <SelectItem value="ENS">ENS</SelectItem>
+                  <SelectItem value="ISTE">ISTE</SelectItem>
+                  <SelectItem value="CONF">CONF</SelectItem>
+                  <SelectItem value="ISTR">ISTR</SelectItem>
+                  <SelectItem value="ISST">ISST</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
@@ -169,28 +226,29 @@ export default function StudentForm({
               </Label>
               <Input
                 id="mail"
+                name="mail"
                 type="email"
                 placeholder="Adresse email"
                 className="col-span-3"
+                value={formData.mail}
+                onChange={handleChange}
+                required
               />
             </div>
 
+            {/* Montant (optionnel) */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="idniv" className="text-right">
-                Niveau
+              <Label htmlFor="montant" className="text-right">
+                Montant
               </Label>
-              <Select>
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Sélectionner le niveau" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="L1">Licence 1</SelectItem>
-                  <SelectItem value="L2">Licence 2</SelectItem>
-                  <SelectItem value="L3">Licence 3</SelectItem>
-                  <SelectItem value="M1">Master 1</SelectItem>
-                  <SelectItem value="M2">Master 2</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                id="montant"
+                name="montant"
+                placeholder="Montant de la bourse (optionnel)"
+                className="col-span-3"
+                value={formData.montant || ""}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <DialogFooter>
