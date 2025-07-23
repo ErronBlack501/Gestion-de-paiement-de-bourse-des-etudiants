@@ -13,13 +13,13 @@ import { toast } from "sonner";
 
 dayjs.locale("fr");
 
-export type Amount = {
-  idniv: string;
+export type Montant = {
+  idNiv: number;
   niveau: string;
-  montant: number | string;
+  valeur: number;
 };
 
-export const columns: ColumnDef<Amount>[] = [
+export const columns: ColumnDef<Montant>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -43,7 +43,7 @@ export const columns: ColumnDef<Amount>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "idniv",
+    accessorKey: "idNiv",
     header: ({ column }) => (
       <DataTableColumnHeader
         className="text-center"
@@ -52,7 +52,7 @@ export const columns: ColumnDef<Amount>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="text-center">{row.getValue("idniv")}</div>
+      <div className="text-center">{row.getValue("idNiv")}</div>
     ),
     enableSorting: false,
   },
@@ -71,7 +71,7 @@ export const columns: ColumnDef<Amount>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "montant",
+    accessorKey: "valeur",
     header: ({ column }) => (
       <DataTableColumnHeader
         className="text-center"
@@ -80,7 +80,7 @@ export const columns: ColumnDef<Amount>[] = [
       />
     ),
     cell: ({ row }) => {
-      const montant = row.getValue("montant");
+      const montant = row.getValue("valeur");
       return (
         <div className="text-center font-medium">
           {montant

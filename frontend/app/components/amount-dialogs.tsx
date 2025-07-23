@@ -17,14 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import type { Amount } from "~/routes/admin.amounts/columns";
+import type { Montant } from "~/routes/admin.amounts/columns";
 
 export function AmountViewDialog({
   amount,
   open,
   onOpenChange,
 }: {
-  amount: Amount;
+  amount: Montant;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
@@ -42,7 +42,7 @@ export function AmountViewDialog({
             <b>Niveau :</b> {amount.niveau}
           </div>
           <div>
-            <b>Montant :</b> {amount.montant} Ar
+            <b>Montant :</b> {amount.valeur} Ar
           </div>
         </div>
         <DialogFooter>
@@ -59,7 +59,7 @@ export function AmountEditDialog({
   onOpenChange,
   onSuccess,
 }: {
-  amount: Amount;
+  amount: Montant;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess?: () => void;
@@ -82,7 +82,11 @@ export function AmountEditDialog({
   }, [fetcher.state, fetcher.data, onSuccess, onOpenChange]);
 
   return (
-    <Dialog key={open ? amount.idniv : "closed"} open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      key={open ? amount.idniv : "closed"}
+      open={open}
+      onOpenChange={onOpenChange}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Modifier le montant</DialogTitle>
@@ -101,11 +105,11 @@ export function AmountEditDialog({
                 <SelectValue placeholder="Sélectionner le niveau" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Licence 1">Licence 1</SelectItem>
-                <SelectItem value="Licence 2">Licence 2</SelectItem>
-                <SelectItem value="Licence 3">Licence 3</SelectItem>
-                <SelectItem value="Master 1">Master 1</SelectItem>
-                <SelectItem value="Master 2">Master 2</SelectItem>
+                <SelectItem value="L1">Licence 1</SelectItem>
+                <SelectItem value="L2">Licence 2</SelectItem>
+                <SelectItem value="L3">Licence 3</SelectItem>
+                <SelectItem value="M1">Master 1</SelectItem>
+                <SelectItem value="M2">Master 2</SelectItem>
                 <SelectItem value="Doctorat">Doctorat</SelectItem>
               </SelectContent>
             </Select>
@@ -118,7 +122,7 @@ export function AmountEditDialog({
               type="number"
               min={0}
               required
-              defaultValue={amount.montant}
+              defaultValue={amount.valeur}
               placeholder="Ex: 25000"
             />
           </div>
@@ -146,7 +150,7 @@ export function AmountDeleteDialog({
   onOpenChange,
   onSuccess,
 }: {
-  amount: Amount;
+  amount: Montant;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess?: () => void;

@@ -9,17 +9,19 @@ import {
   StudentEditDialog,
   StudentDeleteDialog,
 } from "~/components/student-dialogs";
+import { type Montant } from "../admin.amounts/columns";
+import { Mars, Venus } from "lucide-react";
 
 dayjs.locale("fr");
 
 export type Student = {
   matricule: string;
   nom: string;
+  etab: string | null;
   sexe: "H" | "F";
   mail: string;
   datenais: string;
-  montant: string | null;
-  etab: string | null;
+  montant: Montant | null;
 };
 
 export const columns: ColumnDef<Student>[] = [
@@ -46,6 +48,7 @@ export const columns: ColumnDef<Student>[] = [
     enableHiding: false,
   },
   {
+    id: "matricule",
     accessorKey: "matricule",
     header: () => <div className="text-center">Matricule</div>,
     cell: ({ row }) => (
@@ -55,6 +58,7 @@ export const columns: ColumnDef<Student>[] = [
     ),
   },
   {
+    id: "nom",
     accessorKey: "nom",
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -67,22 +71,37 @@ export const columns: ColumnDef<Student>[] = [
     enableSorting: false,
   },
   {
+    id: "etab",
+    accessorKey: "etab",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Etablissement" />
+    ),
+    cell: ({ row }) => <div>{row.getValue("etab")}</div>,
+    enableSorting: true,
+  },
+  {
+    id: "sexe",
     accessorKey: "sexe",
     header: () => <div className="text-center">Sexe</div>,
     cell: ({ row }) => {
       const sex = row.getValue("sexe") as string;
       return (
-        <div className="text-center capitalize">
-          {sex === "H" ? "Homme" : "Femme"}
+        <div className="flex justify-center">
+          {sex === "H" ? (
+            <Mars size={20} className="text-blue-600" />
+          ) : (
+            <Venus size={20} className="text-pink-500" />
+          )}
         </div>
       );
     },
   },
   {
+    id: "mail",
     accessorKey: "mail",
     header: ({ column }) => (
       <DataTableColumnHeader
-        className="justify-center"
+        className="text-center"
         column={column}
         title="Email"
       />
@@ -93,30 +112,31 @@ export const columns: ColumnDef<Student>[] = [
     enableSorting: false,
   },
   {
+    id: "niveau",
     accessorKey: "montant",
     header: ({ column }) => (
-      <DataTableColumnHeader
-        className="justify-center"
-        column={column}
-        title="Niveau"
-      />
+      <DataTableColumnHeader column={column} title="Niveau" />
     ),
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("montant")}</div>
-    ),
+    cell: ({ row }) => {
+      const montant: Montant = row.getValue("montant");
+      return <p>{montant.niveau}</p>;
+    },
   },
   {
-    accessorKey: "etab",
+    id: "montant",
+    accessorKey: "montant",
     header: ({ column }) => (
-      <DataTableColumnHeader
-        className="justify-center"
-        column={column}
-        title="Etablissement"
-      />
+      <DataTableColumnHeader column={column} title="Montant" />
     ),
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("etab")}</div>
-    ),
+    cell: ({ row }) => {
+      const montant: Montant = row.getValue("montant");
+      return (
+        <p className="font-medium">
+          {montant ? `${montant.valeur.toLocaleString("fr-FR")} Ar` : "-"}
+        </p>
+      );
+    },
+    enableSorting: false,
   },
   {
     id: "actions",

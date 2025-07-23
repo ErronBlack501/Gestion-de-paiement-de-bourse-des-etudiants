@@ -27,6 +27,8 @@ import {
 import type { Student } from "../routes/admin.students/columns";
 import * as React from "react";
 import { format } from "date-fns";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { useFetcher } from "react-router";
 
 interface ActionFormProps {
   buttonLabel?: string;
@@ -51,6 +53,16 @@ export default function StudentForm({
 }: ActionFormProps) {
   const [internalOpen, setInternalOpen] = React.useState(false);
   const open = externalOpen !== undefined ? externalOpen : internalOpen;
+  const fetcher = useFetcher();
+
+  // Fermer le dialog après un succès
+  React.useEffect(() => {
+    if (fetcher.state === "idle" && fetcher.data && fetcher.data.success) {
+      if (onSuccess) onSuccess();
+      if (onOpenChange) onOpenChange(false);
+      else setInternalOpen(false);
+    }
+  }, [fetcher.state, fetcher.data, onSuccess, onOpenChange]);
 
   const handleOpenChange = (newOpen: boolean) => {
     if (onOpenChange) {
@@ -59,38 +71,16 @@ export default function StudentForm({
       setInternalOpen(newOpen);
     }
   };
+
   const [formData, setFormData] = React.useState({
     matricule: student?.matricule || "",
     nom: student?.nom || "",
+    etab: student?.etab || "",
     sexe: (student?.sexe as "H" | "F" | "") || "",
     mail: student?.mail || "",
     datenais: student?.datenais ? new Date(student.datenais) : new Date(),
-    etab: student?.etab || "",
-    montant: student?.montant || "",
+    niveau: student?.montant?.niveau || "",
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement form submission logic
-    const payload = {
-      ...formData,
-      datenais:
-        formData.datenais instanceof Date
-          ? format(formData.datenais, "yyyy-MM-dd")
-          : formData.datenais,
-    };
-    console.log("Form submitted:", payload);
-    if (onSuccess) onSuccess();
-    handleOpenChange(false);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -102,7 +92,23 @@ export default function StudentForm({
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        <fetcher.Form method="post" className="space-y-4">
+          {/* Champ caché pour indiquer s'il s'agit d'une mise à jour */}
+          {student && (
+            <input type="hidden" name="id" value={student.matricule} />
+          )}
+
+          {/* Champ caché pour la date formatée */}
+          <input
+            type="hidden"
+            name="datenais"
+            value={
+              formData.datenais instanceof Date
+                ? format(formData.datenais, "yyyy-MM-dd")
+                : formData.datenais
+            }
+          />
+
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="matricule" className="text-right">
@@ -113,8 +119,7 @@ export default function StudentForm({
                 name="matricule"
                 placeholder="Numéro de matricule"
                 className="col-span-3"
-                value={formData.matricule}
-                onChange={handleChange}
+                defaultValue={formData.matricule}
                 required
               />
             </div>
@@ -128,31 +133,27 @@ export default function StudentForm({
                 name="nom"
                 placeholder="Nom et prénom"
                 className="col-span-3"
-                value={formData.nom}
-                onChange={handleChange}
+                defaultValue={formData.nom}
                 required
               />
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="sexe" className="text-right">
-                Sexe
-              </Label>
-              <Select
-                value={formData.sexe}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({ ...prev, sexe: value as "H" | "F" }))
-                }
-                required
+              <Label className="text-right">Sexe</Label>
+              <RadioGroup
+                name="sexe"
+                defaultValue={formData.sexe}
+                className="col-span-3 flex flex-row items-center space-x-6"
               >
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Sélectionner" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="H">Homme</SelectItem>
-                  <SelectItem value="F">Femme</SelectItem>
-                </SelectContent>
-              </Select>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="H" id="sexe-homme" />
+                  <Label htmlFor="sexe-homme">Homme</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="F" id="sexe-femme" />
+                  <Label htmlFor="sexe-femme">Femme</Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
@@ -162,6 +163,7 @@ export default function StudentForm({
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
+                    type="button"
                     variant={"outline"}
                     className="col-span-3 justify-start text-left font-normal"
                   >
@@ -179,7 +181,8 @@ export default function StudentForm({
                       date &&
                       setFormData((prev) => ({ ...prev, datenais: date }))
                     }
-                    initialFocus
+                    className="rounded-md border shadow-sm"
+                    captionLayout="dropdown"
                   />
                 </PopoverContent>
               </Popover>
@@ -189,13 +192,7 @@ export default function StudentForm({
               <Label htmlFor="etab" className="text-right">
                 Institution
               </Label>
-              <Select
-                value={formData.etab}
-                onValueChange={(value) =>
-                  setFormData((prev) => ({ ...prev, etab: value }))
-                }
-                required
-              >
+              <Select name="etab" defaultValue={formData.etab} required>
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Sélectionner l'institution" />
                 </SelectTrigger>
@@ -230,25 +227,28 @@ export default function StudentForm({
                 type="email"
                 placeholder="Adresse email"
                 className="col-span-3"
-                value={formData.mail}
-                onChange={handleChange}
+                defaultValue={formData.mail}
                 required
               />
             </div>
 
-            {/* Montant (optionnel) */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="montant" className="text-right">
-                Montant
+              <Label htmlFor="niveau" className="text-right">
+                Niveau
               </Label>
-              <Input
-                id="montant"
-                name="montant"
-                placeholder="Montant de la bourse (optionnel)"
-                className="col-span-3"
-                value={formData.montant || ""}
-                onChange={handleChange}
-              />
+              <Select name="niveau" defaultValue={formData.niveau} required>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Sélectionner le niveau" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="L1">L1</SelectItem>
+                  <SelectItem value="L2">L2</SelectItem>
+                  <SelectItem value="L3">L3</SelectItem>
+                  <SelectItem value="M1">M1</SelectItem>
+                  <SelectItem value="M2">M2</SelectItem>
+                  <SelectItem value="Doctorat">Doctorat</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <DialogFooter>
@@ -259,9 +259,17 @@ export default function StudentForm({
             >
               Annuler
             </Button>
-            <Button type="submit">{student ? "Mettre à jour" : "Créer"}</Button>
+            <Button type="submit" disabled={fetcher.state === "submitting"}>
+              {fetcher.state === "submitting"
+                ? student
+                  ? "Mise à jour..."
+                  : "Création..."
+                : student
+                  ? "Mettre à jour"
+                  : "Créer"}
+            </Button>
           </DialogFooter>
-        </form>
+        </fetcher.Form>
       </DialogContent>
     </Dialog>
   );

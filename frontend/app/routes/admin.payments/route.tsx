@@ -1,36 +1,75 @@
 import { PageHeader } from "~/components/page-header";
 import { DataTable } from "~/components/data-table";
 import { Button } from "~/components/ui/button";
-import { columns } from "~/routes/admin.amounts/columns";
+import { columns, type Payment } from "~/routes/admin.payments/columns";
 import type { Route } from ".react-router/types/app/routes/admin.students/+types/route";
 import { CirclePlus } from "lucide-react";
-import { AmountForm } from "~/components/amount-create-form";
+import PaymentCreateForm from "~/components/payment-create-form";
 
 export async function clientLoader() {
-  const res = await fetch("http://localhost:8080/montants");
+  const res = await fetch("http://localhost:8080/payers");
   const data = await res.json();
   return data;
 }
 
-export default function AmountsPage({ loaderData }: Route.ComponentProps) {
-  const data = loaderData;
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData();
+  const action = formData.get("_action");
+
+  const paymentData = {
+    anneeUniv: formData.get("anneeUniv"),
+    date: formData.get("date"),
+    nbrMois: Number(formData.get("nbrMois")),
+    montant: Number(formData.get("montant")),
+    matricule: formData.get("matricule"),
+  };
+
+  if (action === "delete") {
+    const id = formData.get("idPaye");
+    const response = await fetch(`http://localhost:8080/delete/payer/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) throw new Error("Échec de la suppression du paiement");
+
+    return {
+      success: true,
+      action: "delete",
+      message: "Paiement supprimé avec succès.",
+    };
+  }
+
+  // Par défaut : création
+  const response = await fetch("http://localhost:8080/add/payer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(paymentData),
+  });
+
+  if (!response.ok) throw new Error("Échec de la création du paiement");
+
+  return {
+    success: true,
+    action: "create",
+    message: "Paiement créé avec succès.",
+  };
+}
+
+export default function PaymentsPage({ loaderData }: Route.ComponentProps) {
+  const data: Payment[] = loaderData;
   return (
     <>
       <div className="flex items-center justify-between">
         <PageHeader
-          title="Montants"
-          subtitle="Gérer les informations des montants"
+          title="Paiements"
+          subtitle="Gérer les informations des paiements des étudiants"
         />
-        <Button
-          variant="secondary"
-          onClick={() => {
-            /* handle open logic here */
-          }}
-        >
-          <CirclePlus />
-          Ajouter Montant
-        </Button>
-        <AmountForm open={false} onOpenChange={() => {}} />
+        <PaymentCreateForm>
+          <Button variant="secondary">
+            <CirclePlus />
+            Ajouter un Paiement
+          </Button>
+        </PaymentCreateForm>
       </div>
       <DataTable columns={columns} data={data} />
     </>

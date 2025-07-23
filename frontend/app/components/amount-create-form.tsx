@@ -67,20 +67,20 @@ export default function AmountCreateForm({
                 <SelectValue placeholder="Sélectionner le niveau" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Licence 1">Licence 1</SelectItem>
-                <SelectItem value="Licence 2">Licence 2</SelectItem>
-                <SelectItem value="Licence 3">Licence 3</SelectItem>
-                <SelectItem value="Master 1">Master 1</SelectItem>
-                <SelectItem value="Master 2">Master 2</SelectItem>
+                <SelectItem value="L1">Licence 1</SelectItem>
+                <SelectItem value="L2">Licence 2</SelectItem>
+                <SelectItem value="L3">Licence 3</SelectItem>
+                <SelectItem value="M1">Master 1</SelectItem>
+                <SelectItem value="M2">Master 2</SelectItem>
                 <SelectItem value="Doctorat">Doctorat</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div>
-            <Label htmlFor="montant">Montant (Ar)</Label>
+            <Label htmlFor="valeur">Montant (Ar)</Label>
             <Input
-              id="montant"
-              name="montant"
+              id="valeur"
+              name="valeur"
               type="number"
               min={0}
               required

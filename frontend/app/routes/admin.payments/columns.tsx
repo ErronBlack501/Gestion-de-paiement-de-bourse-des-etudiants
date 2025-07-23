@@ -4,15 +4,24 @@ import "dayjs/locale/fr";
 import { Checkbox } from "~/components/ui/checkbox";
 import { DataTableColumnHeader } from "~/components/data-table-column-header";
 import { DataTableRowActions } from "~/components/data-table-row-actions";
+import {
+  PaymentViewDialog,
+  PaymentDeleteDialog,
+} from "~/components/payment-dialogs";
+import type { Student } from "../admin.students/columns";
 
 dayjs.locale("fr");
 
 export type Payment = {
   idPaye: string;
-  pMatricule: string;
   anneeUniv: string;
   date: string;
   nbrMois: number;
+  equipements: number;
+  matricule: string;
+  etudiant: Student;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -39,59 +48,62 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: () => <div className="text-center">Id</div>,
+    accessorKey: "idPaye",
+    header: () => <div className="text-center">ID Paiement</div>,
     cell: ({ row }) => (
       <div className="text-center">
-        {(row.getValue("id") as string).slice(0, 8)}
+        {(row.getValue("idPaye") as string).slice(0, 8)}
       </div>
     ),
   },
   {
-    accessorKey: "name",
+    accessorKey: "matricule",
     header: ({ column }) => (
       <DataTableColumnHeader
+        column={column}
+        title="Matricule"
         className="text-center"
-        column={column}
-        title="Nom"
       />
     ),
     cell: ({ row }) => (
-      <div className="text-center">{row.getValue("name")}</div>
+      <div className="text-center">{row.getValue("matricule")}</div>
     ),
-    enableSorting: false,
   },
   {
-    accessorKey: "email",
+    accessorKey: "anneeUniv",
     header: ({ column }) => (
       <DataTableColumnHeader
-        className="justify-center"
         column={column}
-        title="Email"
+        title="Année Univ."
+        className="text-center"
       />
     ),
     cell: ({ row }) => (
-      <div className="text-center">{row.getValue("email")}</div>
+      <div className="text-center">{row.getValue("anneeUniv")}</div>
     ),
   },
   {
-    accessorKey: "sex",
-    header: () => <div className="text-center">Sexe</div>,
-    cell: ({ row }) => {
-      const sex = row.getValue("sex") as string;
-      return (
-        <div className="text-center capitalize">
-          {sex === "male" ? "Homme" : "Femme"}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "dateOfBirth",
-    header: () => <div className="text-center">Date de naissance</div>,
+    accessorKey: "date",
+    header: () => <div className="text-center">Date de paiement</div>,
     cell: ({ row }) => (
       <div className="text-center">
-        {dayjs(row.getValue("dateOfBirth")).format("DD/MM/YYYY")}
+        {dayjs(row.getValue("date")).format("DD/MM/YYYY")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "nbrMois",
+    header: () => <div className="text-center">Nombre de mois</div>,
+    cell: ({ row }) => (
+      <div className="text-center">{row.getValue("nbrMois")}</div>
+    ),
+  },
+  {
+    accessorKey: "equipements",
+    header: () => <div className="text-center">Équipements</div>,
+    cell: ({ row }) => (
+      <div className="text-center">
+        {Number(row.getValue("equipements")).toLocaleString("fr-FR")} Ar
       </div>
     ),
   },
@@ -105,7 +117,34 @@ export const columns: ColumnDef<Payment>[] = [
     ),
   },
   {
+    accessorKey: "updatedAt",
+    header: () => <div className="text-center">Modifié le</div>,
+    cell: ({ row }) => (
+      <div className="text-center">
+        {dayjs(row.getValue("updatedAt")).format("DD/MM/YYYY à HH:mm")}
+      </div>
+    ),
+  },
+  {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions student={row.original} />,
+    cell: ({ row }) => (
+      <DataTableRowActions
+        row={row.original}
+        renderViewDialog={(payment, open, onOpenChange) => (
+          <PaymentViewDialog
+            payment={payment}
+            open={open}
+            onOpenChange={onOpenChange}
+          />
+        )}
+        renderDeleteDialog={(payment, open, onOpenChange) => (
+          <PaymentDeleteDialog
+            payment={payment}
+            open={open}
+            onOpenChange={onOpenChange}
+          />
+        )}
+      />
+    ),
   },
 ];

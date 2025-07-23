@@ -1,12 +1,10 @@
 import { PageHeader } from "~/components/page-header";
 import { DataTable } from "~/components/data-table";
-import { columns, type Amount } from "~/routes/admin.amounts/columns";
+import { columns, type Montant } from "~/routes/admin.amounts/columns";
 import type { Route } from ".react-router/types/app/routes/admin.students/+types/route";
 import { CirclePlus } from "lucide-react";
 import AmountCreateForm from "~/components/amount-create-form";
 import { Button } from "~/components/ui/button";
-import { toast } from "sonner";
-import { useFetcher } from "react-router";
 
 export async function clientLoader() {
   const res = await fetch("http://localhost:8080/montants");
@@ -58,7 +56,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
   // Par défaut : création
   const niveau = formData.get("niveau");
-  const montant = formData.get("montant");
+  const valeur = formData.get("valeur");
   const response = await fetch("http://localhost:8080/add/montant", {
     headers: {
       "Content-Type": "application/json",
@@ -66,7 +64,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     method: "POST",
     body: JSON.stringify({
       niveau,
-      montant,
+      valeur,
     }),
   });
   if (!response.ok) {
@@ -80,7 +78,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 }
 
 export default function AmountsPage({ loaderData }: Route.ComponentProps) {
-  const data: Amount[] = loaderData;
+  const data: Montant[] = loaderData;
   return (
     <>
       <div className="flex items-center justify-between">
