@@ -18,10 +18,10 @@ export type Payment = {
   date: string;
   nbrMois: number;
   equipements: number;
-  matricule: string;
-  etudiant: Student;
+  matricule?: string;
   createdAt: string;
   updatedAt: string;
+  etudiant?: Student;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -51,13 +51,12 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "idPaye",
     header: () => <div className="text-center">ID Paiement</div>,
     cell: ({ row }) => (
-      <div className="text-center">
-        {(row.getValue("idPaye") as string).slice(0, 8)}
-      </div>
+      <div className="text-center">{row.getValue("idPaye")}</div>
     ),
   },
   {
-    accessorKey: "matricule",
+    id: "etudiant",
+    accessorKey: "etudiant",
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -65,9 +64,11 @@ export const columns: ColumnDef<Payment>[] = [
         className="text-center"
       />
     ),
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("matricule")}</div>
-    ),
+    cell: ({ row }) => {
+      const student = row.getValue("etudiant") as Student;
+      return <div className="text-center">{student?.matricule}</div>;
+    },
+    enableSorting: false,
   },
   {
     accessorKey: "anneeUniv",
@@ -81,6 +82,7 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => (
       <div className="text-center">{row.getValue("anneeUniv")}</div>
     ),
+    enableSorting: false,
   },
   {
     accessorKey: "date",

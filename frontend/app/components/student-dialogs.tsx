@@ -215,7 +215,8 @@ export function StudentEditDialog({
                   mode="single"
                   selected={parseISO(form.datenais)}
                   onSelect={handleDateChange}
-                  autoFocus
+                  className="rounded-md border shadow-sm"
+                  captionLayout="dropdown"
                 />
               </PopoverContent>
             </Popover>

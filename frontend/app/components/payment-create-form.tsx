@@ -91,10 +91,13 @@ export default function PaymentCreateForm({
         </DialogHeader>
         <fetcher.Form method="post" className="space-y-4">
           {/* Champ caché pour indiquer s'il s'agit d'une mise à jour */}
-          {payment && <input type="hidden" name="id" value={payment.idPaye} />}
+          {payment && (
+            <input type="hidden" name="idPaye" value={payment.idPaye} />
+          )}
 
           {/* Champ caché pour la date formatée */}
           <input
+            id="date"
             type="hidden"
             name="date"
             value={
@@ -132,36 +135,6 @@ export default function PaymentCreateForm({
                 defaultValue={formData.anneeUniv}
                 required
               />
-            </div>
-
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="date" className="text-right">
-                Date de paiement
-              </Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    type="button"
-                    variant={"outline"}
-                    className="col-span-3 justify-start text-left font-normal"
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {formData.date
-                      ? format(formData.date, "dd/MM/yyyy")
-                      : "Choisir une date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={formData.date}
-                    onSelect={(date) =>
-                      date && setFormData((prev) => ({ ...prev, date }))
-                    }
-                    autoFocus
-                  />
-                </PopoverContent>
-              </Popover>
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">

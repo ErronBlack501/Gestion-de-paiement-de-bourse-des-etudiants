@@ -33,7 +33,19 @@ export function PaymentViewDialog({
             <b>ID Paiement :</b> {payment.idPaye}
           </div>
           <div>
-            <b>Matricule :</b> {payment.matricule}
+            <b>Nom et Prénom :</b> {payment.etudiant?.nom}
+          </div>
+          <div>
+            <b>Institution :</b> {payment.etudiant?.etab}
+          </div>
+          <div>
+            <b>Matricule :</b> {payment.etudiant?.matricule}
+          </div>
+          <div>
+            <b>Niveau :</b> {payment.etudiant?.montant?.niveau}
+          </div>
+          <div>
+            <b>Montant par mois :</b> {payment.etudiant?.montant?.valeur} Ar
           </div>
           <div>
             <b>Année universitaire :</b> {payment.anneeUniv}
@@ -102,7 +114,7 @@ export function PaymentDeleteDialog({
                 <b>ID :</b> {payment.idPaye}
               </div>
               <div>
-                <b>Matricule :</b> {payment.matricule}
+                <b>Matricule :</b> {payment.etudiant?.matricule}
               </div>
               <div>
                 <b>Équipements :</b> {payment.equipements.toLocaleString()} Ar

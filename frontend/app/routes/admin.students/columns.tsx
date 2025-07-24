@@ -112,6 +112,33 @@ export const columns: ColumnDef<Student>[] = [
     enableSorting: false,
   },
   {
+    id: "datenais",
+    accessorKey: "datenais",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-center"
+        column={column}
+        title="Date de naissance"
+      />
+    ),
+    cell: ({ row }) => {
+      const rawDate = row.getValue("datenais") as string;
+      return (
+        <div className="text-center">
+          {dayjs(rawDate).format("DD MMMM YYYY")}
+        </div>
+      );
+    },
+    filterFn: (row, columnId, filterValue) => {
+      if (!filterValue) return true;
+
+      const birthDate = dayjs(row.getValue(columnId));
+      const age = dayjs().diff(birthDate, "year");
+      return age < 18;
+    },
+    enableSorting: false,
+  },
+  {
     id: "niveau",
     accessorKey: "montant",
     header: ({ column }) => (

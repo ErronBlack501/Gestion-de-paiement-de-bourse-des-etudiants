@@ -23,6 +23,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { DataTableViewOptions } from "./data-table-view-options";
 import { DataTablePagination } from "./data-table-pagination";
+import { Button } from "./ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -81,6 +82,19 @@ export function DataTable<TData, TValue>({
         )}
         <DataTableViewOptions table={table} />
       </div>
+      <Button
+        variant="outline"
+        onClick={() => {
+          const current = table.getColumn("datenais")?.getFilterValue();
+          table
+            .getColumn("datenais")
+            ?.setFilterValue(current ? undefined : true);
+        }}
+      >
+        {table.getColumn("datenais")?.getFilterValue()
+          ? "Tous les étudiants"
+          : "Moins de 18 ans"}
+      </Button>
       <div className="my-2 w-full overflow-auto rounded-md border border-gray-300">
         <Table>
           <TableHeader>

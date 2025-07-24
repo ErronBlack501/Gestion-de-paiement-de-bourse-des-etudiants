@@ -5,6 +5,20 @@ import { columns, type Payment } from "~/routes/admin.payments/columns";
 import type { Route } from ".react-router/types/app/routes/admin.students/+types/route";
 import { CirclePlus } from "lucide-react";
 import PaymentCreateForm from "~/components/payment-create-form";
+import PaymentPdf from "~/components/payment-pdf";
+import * as ReactPDF from "@react-pdf/renderer";
+
+async function generateAndDownloadPdf(payerData: Payment) {
+  const blob = await ReactPDF.pdf(<PaymentPdf payment={payerData} />).toBlob();
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `recu_paiement_${payerData.etudiant?.matricule}.pdf`;
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
 
 export async function clientLoader() {
   const res = await fetch("http://localhost:8080/payers");
@@ -20,7 +34,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     anneeUniv: formData.get("anneeUniv"),
     date: formData.get("date"),
     nbrMois: Number(formData.get("nbrMois")),
-    montant: Number(formData.get("montant")),
+    equipements: Number(formData.get("equipements")),
     matricule: formData.get("matricule"),
   };
 
@@ -47,6 +61,10 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   });
 
   if (!response.ok) throw new Error("Échec de la création du paiement");
+
+  const newPayment: Payment = await response.json();
+
+  await generateAndDownloadPdf(newPayment);
 
   return {
     success: true,

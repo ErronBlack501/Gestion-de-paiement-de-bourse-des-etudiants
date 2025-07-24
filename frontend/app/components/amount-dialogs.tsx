@@ -36,7 +36,7 @@ export function AmountViewDialog({
         </DialogHeader>
         <div>
           <div>
-            <b>ID Niveau :</b> {amount.idniv}
+            <b>ID Niveau :</b> {amount.idNiv}
           </div>
           <div>
             <b>Niveau :</b> {amount.niveau}
@@ -83,7 +83,7 @@ export function AmountEditDialog({
 
   return (
     <Dialog
-      key={open ? amount.idniv : "closed"}
+      key={open ? amount.idNiv : "closed"}
       open={open}
       onOpenChange={onOpenChange}
     >
@@ -93,10 +93,10 @@ export function AmountEditDialog({
         </DialogHeader>
         <fetcher.Form method="post" className="space-y-4">
           <input type="hidden" name="_action" value="edit" />
-          <input type="hidden" name="idniv" value={amount.idniv} />
+          <input type="hidden" name="idniv" value={amount.idNiv} />
           <div>
             <Label>ID Niveau</Label>
-            <Input value={amount.idniv} disabled />
+            <Input value={amount.idNiv} disabled />
           </div>
           <div>
             <Label htmlFor="niveau">Niveau</Label>
@@ -172,7 +172,7 @@ export function AmountDeleteDialog({
         </DialogHeader>
         <fetcher.Form method="post">
           <input type="hidden" name="_action" value="delete" />
-          <input type="hidden" name="idniv" value={amount.idniv} />
+          <input type="hidden" name="idniv" value={amount.idNiv} />
           <div>
             Es-tu sûr de vouloir supprimer le montant pour{" "}
             <b>{amount.niveau}</b> ?
