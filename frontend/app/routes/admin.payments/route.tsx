@@ -73,8 +73,21 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   };
 }
 
+const payementSearchFields = [
+  {
+    key: "etudiant",
+    label: "Étudiant",
+    placeholder: "Rechercher par étudiant...",
+  },
+  {
+    key: "reference",
+    label: "Référence",
+    placeholder: "Rechercher par référence...",
+  },
+  { key: "statut", label: "Statut", placeholder: "Rechercher par statut..." },
+];
+
 export default function PaymentsPage({ loaderData }: Route.ComponentProps) {
-  const data: Payment[] = loaderData;
   return (
     <>
       <div className="flex items-center justify-between">
@@ -89,7 +102,12 @@ export default function PaymentsPage({ loaderData }: Route.ComponentProps) {
           </Button>
         </PaymentCreateForm>
       </div>
-      <DataTable columns={columns} data={data} />
+      <DataTable
+        columns={columns}
+        data={loaderData}
+        searchFields={payementSearchFields}
+        // showAgeFilter pas spécifié = false par défaut
+      />{" "}
     </>
   );
 }

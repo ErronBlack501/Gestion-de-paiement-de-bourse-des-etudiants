@@ -24,6 +24,30 @@ export type Student = {
   montant: Montant | null;
 };
 
+const niveauOrder = ["L1", "L2", "L3", "M1", "M2", "Doctorat"];
+
+const sortByNiveau = (
+  rowA: { getValue: (arg0: any) => Montant | null },
+  rowB: { getValue: (arg0: any) => Montant | null },
+  columnId: any,
+) => {
+  const montantA = rowA.getValue(columnId) as Montant | null;
+  const montantB = rowB.getValue(columnId) as Montant | null;
+
+  const niveauA = montantA?.niveau ?? "";
+  const niveauB = montantB?.niveau ?? "";
+
+  const indexA = niveauOrder.indexOf(niveauA);
+  const indexB = niveauOrder.indexOf(niveauB);
+
+  // Gère les valeurs non trouvées (index -1)
+  if (indexA === -1 && indexB === -1) return 0;
+  if (indexA === -1) return 1;
+  if (indexB === -1) return -1;
+
+  return indexA - indexB;
+};
+
 export const columns: ColumnDef<Student>[] = [
   {
     id: "select",
@@ -74,10 +98,16 @@ export const columns: ColumnDef<Student>[] = [
     id: "etab",
     accessorKey: "etab",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Etablissement" />
+      <DataTableColumnHeader
+        className="text-center"
+        column={column}
+        title="Etablissement"
+      />
     ),
-    cell: ({ row }) => <div>{row.getValue("etab")}</div>,
-    enableSorting: true,
+    cell: ({ row }) => (
+      <div className="text-center">{row.getValue("etab")}</div>
+    ),
+    enableSorting: false,
   },
   {
     id: "sexe",
@@ -148,6 +178,8 @@ export const columns: ColumnDef<Student>[] = [
       const montant: Montant = row.getValue("montant");
       return <p>{montant.niveau}</p>;
     },
+    enableSorting: true,
+    sortingFn: sortByNiveau,
   },
   {
     id: "montant",

@@ -12,6 +12,21 @@ export async function clientLoader() {
   return data;
 }
 
+const studentSearchFields = [
+  { key: "nom", label: "Nom", placeholder: "Rechercher par nom..." },
+  {
+    key: "matricule",
+    label: "Matricule",
+    placeholder: "Rechercher par matricule...",
+  },
+  {
+    key: "institution",
+    label: "Institution",
+    placeholder: "Rechercher par institution...",
+  },
+  { key: "email", label: "Email", placeholder: "Rechercher par email..." },
+];
+
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
   const action = formData.get("_action");
@@ -81,7 +96,6 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 }
 
 export default function StudentsPage({ loaderData }: Route.ComponentProps) {
-  const data = loaderData;
   return (
     <>
       <div className="flex items-center justify-between">
@@ -96,7 +110,12 @@ export default function StudentsPage({ loaderData }: Route.ComponentProps) {
           </Button>
         </StudentForm>
       </div>
-      <DataTable columns={columns} data={data} />
+      <DataTable
+        columns={columns}
+        data={loaderData}
+        searchFields={studentSearchFields}
+        showAgeFilter={true} // Active le filtre "Moins de 18 ans"
+      />
     </>
   );
 }

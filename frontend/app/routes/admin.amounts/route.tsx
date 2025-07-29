@@ -77,8 +77,21 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   };
 }
 
+const montantSearchFields = [
+  {
+    key: "designation",
+    label: "Désignation",
+    placeholder: "Rechercher par désignation...",
+  },
+  {
+    key: "montant",
+    label: "Montant",
+    placeholder: "Rechercher par montant...",
+  },
+  { key: "type", label: "Type", placeholder: "Rechercher par type..." },
+];
+
 export default function AmountsPage({ loaderData }: Route.ComponentProps) {
-  const data: Montant[] = loaderData;
   return (
     <>
       <div className="flex items-center justify-between">
@@ -95,7 +108,12 @@ export default function AmountsPage({ loaderData }: Route.ComponentProps) {
           }
         />
       </div>
-      <DataTable columns={columns} data={data} />
+      <DataTable
+        columns={columns}
+        data={loaderData}
+        searchFields={montantSearchFields}
+        // showAgeFilter pas spécifié = false par défaut
+      />{" "}
     </>
   );
 }
