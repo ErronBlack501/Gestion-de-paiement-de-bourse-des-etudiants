@@ -47,7 +47,7 @@ const data = {
     },
     {
       title: "Retartadaires",
-      url: "/admin/delayed",
+      url: "/admin/latecomers",
       icon: ClockAlert,
     },
   ],

@@ -34,6 +34,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useLocation } from "react-router";
+import { NotifyLateComers } from "./notify-latecomers";
 interface SearchField {
   key: string;
   label: string;
@@ -112,6 +114,9 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+
+  const location = useLocation();
+  const isLateComersPage = location.pathname.includes("latecomers");
 
   return (
     <>
@@ -276,6 +281,17 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <DataTablePagination table={table} />
+      {isLateComersPage && (
+        <div className="mt-4 flex justify-start">
+          <NotifyLateComers
+            selectedRows={
+              table
+                .getSelectedRowModel()
+                .rows.map((row) => row.original) as Student[]
+            }
+          />
+        </div>
+      )}
     </>
   );
 }
